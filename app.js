@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+
 //Import Routes
 const userRoutes = require('./routes/user');
 
@@ -14,15 +15,14 @@ app.use(bodyParser.json());
 
 // Allow access to origin 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
-
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    );
+    res.setHeader("Access-Control-Allow-Headers", " Content-Type, Authorization");
+    next();
+  });
 //Use routes
 app.use('/user',userRoutes);
 
@@ -45,5 +45,6 @@ mongoose
   )
   .then((result) => {
     app.listen(8080);
+    
   })
   .catch((err) => console.log(err));
