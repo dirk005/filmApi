@@ -1,7 +1,5 @@
 //Add helper functions
 
-// Helper Functions
-
 // Helper to throw error 
 exports.throwError = (text, status, errorArray = []) => {
     const error = new Error(text);
