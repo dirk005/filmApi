@@ -5,6 +5,9 @@ const { body } = require("express-validator");
 //Import controllers
 const userController = require("../controllers/user");
 
+//Import Middleware
+const isAuth = require("../middleware/is-auth");
+
 // Import Modole information if needed
 const User = require("../models/user");
 
@@ -41,7 +44,6 @@ router.post(
       .isEmail()
       .withMessage("Please enter a valid Email.")
       .normalizeEmail(),
-    body("password").trim().isLength({ min: 3 }),
   ],
   userController.login
 );

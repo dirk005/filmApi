@@ -1,6 +1,7 @@
 //Import Packages
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 //Import Modules if needed
 const User = require("../models/user");
@@ -73,8 +74,20 @@ exports.login = (req, res, next) => {
       if (!passwordMatch) {
         throwError("Passowrd does not match", 401);
       }
-      
-      res.status(200).json({ userId: loadedUser._id.toString(), userData:loadedUser });
+      // Create a user token 
+      const token = jwt.sign(
+        {
+          email: loadedUser.email,
+          userId: loadedUser._id.toString(),
+        },
+        "PassCode",
+        { expiresIn: "2h" }
+      );
+
+      //return a response
+      res
+        .status(200)
+        .json({ token: token, userId: loadedUser._id.toString(), userData: loadedUser });
     })
     //Throw error if problem creating user
     .catch((err) => catchError(err, next));
