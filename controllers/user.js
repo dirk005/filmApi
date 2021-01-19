@@ -20,8 +20,8 @@ exports.signup = (req, res, next) => {
   //Get values form request body
   const name = req.body.name;
   const email = req.body.email;
-  const password = req.body.password;
-
+  const password = req.body.password; 
+  
   // Encrypt the password
   bcrypt
     .hash(password, 12)
@@ -32,7 +32,7 @@ exports.signup = (req, res, next) => {
         name: name,
         password: hashedPw,
       });
-
+      
       return user.save(); // added user to database
     })
     .then((result) => {
@@ -81,7 +81,7 @@ exports.login = (req, res, next) => {
           userId: loadedUser._id.toString(),
         },
         "PassCode",
-        { expiresIn: "2h" }
+        { expiresIn: "12h" }
       );
 
       //return a response

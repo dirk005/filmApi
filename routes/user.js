@@ -37,6 +37,7 @@ router.put(
   userController.signup
 );
 
+//Login this logs the user in to account
 router.post(
   "/login",
   [

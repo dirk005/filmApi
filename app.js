@@ -2,10 +2,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-
+require('dotenv').config();
 
 //Import Routes
 const userRoutes = require('./routes/user');
+const movieRoutes = require('./routes/movie');
 
 // Use express on app
 const app = express();
@@ -23,8 +24,10 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Headers", " Content-Type, Authorization");
     next();
   });
+  
 //Use routes
 app.use('/user',userRoutes);
+app.use('/movie',movieRoutes);
 
 //Handel errors that are thrown
 app.use((error, req, res, next) => {
@@ -41,7 +44,7 @@ app.use((error, req, res, next) => {
 // Connect to mongodb database and start server
 mongoose
   .connect(
-    "mongodb+srv://dirk:EpgcTCkCNHuzx6j@cluster0.mlikz.mongodb.net/filmtv?retryWrites=true&w=majority"
+    `mongodb+srv://dirk:${process.env.MONGODB_KEY}@cluster0.mlikz.mongodb.net/filmtv?retryWrites=true&w=majority`
   )
   .then((result) => {
     app.listen(8080);

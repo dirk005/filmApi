@@ -1,4 +1,4 @@
-//Import packages 
+//Import packages
 const mongoose = require("mongoose");
 
 // Create schema
@@ -18,7 +18,13 @@ const userSchema = new Schema({
     type: String,
     require: true,
   },
+  movies: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Movie",
+    },
+  ],
 });
 
 //Export user schema (this will create the user table if it does not exists)
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);
