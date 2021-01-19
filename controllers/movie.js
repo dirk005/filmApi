@@ -11,9 +11,12 @@ exports.getMovie = async (req, res, next) => {
   const userId = req.userId;
   try {
     const movie = await Movie.findOne({ movieId: movieId, user: userId });
+    if (!movie) {
+        throwError("Could not find movie", 404);;
+    }
     res
       .status(201)
-      .json({ message: "Movie added successfully", watched: movie.watched });
+      .json({ message: "Movie found successfully", watched: movie.watched });
   } catch (err) {
     catchError(err, next);
   }
