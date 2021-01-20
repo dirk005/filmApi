@@ -24,6 +24,12 @@ const userSchema = new Schema({
       ref: "Movie",
     },
   ],
+  shows: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Show",
+    },
+  ],
 });
 
 //Export user schema (this will create the user table if it does not exists)

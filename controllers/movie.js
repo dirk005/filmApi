@@ -12,7 +12,7 @@ exports.getMovie = async (req, res, next) => {
   try {
     const movie = await Movie.findOne({ movieId: movieId, user: userId });
     if (!movie) {
-        throwError("Could not find movie", 404);;
+      throwError("Could not find movie", 404);
     }
     res
       .status(201)
@@ -21,7 +21,7 @@ exports.getMovie = async (req, res, next) => {
     catchError(err, next);
   }
 };
-
+//Update movie information
 exports.updateMovie = async (req, res, next) => {
   const movieId = req.params.movieId;
   const userId = req.userId;
@@ -55,12 +55,13 @@ exports.addMovie = async (req, res, next) => {
     const user = await User.findById(userId);
     user.movies.push(movie);
     await user.save();
-    res.status(201).json({ message: "Movie added siccessfully", movie: movie });
+    res.status(201).json({ message: "Movie added successfully", movie: movie });
   } catch (err) {
     catchError(err, next);
   }
 };
 
+//Remove movie from list
 exports.removeMovie = async (req, res, next) => {
   const movieId = req.params.movieId;
   const userId = req.userId;

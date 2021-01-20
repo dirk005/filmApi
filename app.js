@@ -2,11 +2,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-require('dotenv').config();
+require("dotenv").config();
 
 //Import Routes
-const userRoutes = require('./routes/user');
-const movieRoutes = require('./routes/movie');
+const userRoutes = require("./routes/user");
+const movieRoutes = require("./routes/movie");
+const showRoutes = require("./routes/show");
+const episodeRoutes = require("./routes/episode");
 
 // Use express on app
 const app = express();
@@ -14,32 +16,34 @@ const app = express();
 // Pharse body data to json
 app.use(bodyParser.json());
 
-// Allow access to origin 
+// Allow access to origin
 app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-    );
-    res.setHeader("Access-Control-Allow-Headers", " Content-Type, Authorization");
-    next();
-  });
-  
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+  );
+  res.setHeader("Access-Control-Allow-Headers", " Content-Type, Authorization");
+  next();
+});
+
 //Use routes
-app.use('/user',userRoutes);
-app.use('/movie',movieRoutes);
+app.use("/user", userRoutes);
+app.use("/movie", movieRoutes);
+app.use("/show", showRoutes);
+app.use("/episode", episodeRoutes);
 
 //Handel errors that are thrown
 app.use((error, req, res, next) => {
-    console.log(error);
-    const status = error.statusCode || 500;
-    const message = error.message;
-    const errors = error.data;
-    res.status(status).json({
-      message: message,
-      errors: errors,
-    });
+  console.log(error);
+  const status = error.statusCode || 500;
+  const message = error.message;
+  const errors = error.data;
+  res.status(status).json({
+    message: message,
+    errors: errors,
   });
+});
 
 // Connect to mongodb database and start server
 mongoose
@@ -48,6 +52,5 @@ mongoose
   )
   .then((result) => {
     app.listen(8080);
-    
   })
   .catch((err) => console.log(err));
