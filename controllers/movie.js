@@ -5,7 +5,7 @@ const User = require("../models/user");
 //Import helper functions
 const { throwError, catchError } = require("../util/hellper");
 
-//Get movies
+//Get movie
 exports.getMovie = async (req, res, next) => {
   const movieId = req.params.movieId;
   const userId = req.userId;
@@ -16,7 +16,22 @@ exports.getMovie = async (req, res, next) => {
     }
     res
       .status(201)
-      .json({ message: "Movie found successfully", watched: movie.watched });
+      .json({ message: "Movie found successfully", watched: movie.watched , gotMovie: true });
+  } catch (err) {
+    catchError(err, next);
+  }
+};
+//Get movies
+exports.getAllMovies = async (req, res, next) => {
+  const userId = req.userId;
+  try {
+    const movies = await Movie.find({  user: userId });
+    if (!movies) {
+      throwError("Could not find movie", 404);
+    }
+    res
+      .status(201)
+      .json({ message: "Movie found successfully", movies: movies });
   } catch (err) {
     catchError(err, next);
   }

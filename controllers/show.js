@@ -1,5 +1,6 @@
 //Import Modules
 const Show = require("../models/show");
+const Episode = require("../models/episode");
 const User = require("../models/user");
 
 //Import helper functions
@@ -42,7 +43,7 @@ exports.addShow = async (req, res, next) => {
   }
 };
 
-//Remove movie from list
+//Remove show from list
 exports.removeShow = async (req, res, next) => {
   const showId = req.body.showId;
   const userId = req.userId;
@@ -57,6 +58,11 @@ exports.removeShow = async (req, res, next) => {
     const user = await User.findById(userId);
     user.shows.pull(showDbId);
     await user.save();
+    await Episode.find({
+      showId: showId,
+      user: userId,
+    }).deleteMany();
+
     res.status(200).json({ message: "Show removed successfully" });
   } catch (err) {
     catchError(err, next);

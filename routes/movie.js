@@ -13,6 +13,8 @@ const movieController = require("../controllers/movie");
 //Get movies
 router.get("/movie/:movieId", isAuth, movieController.getMovie);
 
+router.get("/movies", isAuth, movieController.getAllMovies);
+
 //Update watched status
 router.put("/movie/:movieId", isAuth, movieController.updateMovie);
 

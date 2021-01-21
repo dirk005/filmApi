@@ -8,9 +8,10 @@ const { throwError, catchError } = require("../util/hellper");
 
 //Get episodes
 exports.getEpisode = async (req, res, next) => {
-  const episodeId = req.params.episodeId;
-  const showId = req.parmas.showId;
+  const episodeId = req.query.episodeId;
+  const showId = req.query.showId;
   const userId = req.userId;
+
   try {
     const episode = await Episode.findOne({
       episodeId: episodeId,
@@ -22,7 +23,7 @@ exports.getEpisode = async (req, res, next) => {
     }
     res.status(201).json({
       message: "episode found successfully",
-      watched: episode.watched,
+      watched: true,
     });
   } catch (err) {
     catchError(err, next);
@@ -35,19 +36,22 @@ exports.addEpisode = async (req, res, next) => {
   const showId = req.body.showId;
   const userId = req.userId;
 
-  const episode = new Episode({
-    episodeId: episodeId,
-    watched: true,
-    show: showId,
-    user: userId,
-  });
-
   try {
-    await episode.save();
     const show = await Show.findOne({
       showId: showId,
       user: userId,
     });
+    showDBId = show._id.toString();
+    const episode = new Episode({
+      episodeId: episodeId,
+      showId: showId,
+      watched: true,
+      show: showDBId,
+      user: userId,
+    });
+
+    await episode.save();
+
     show.episodes.push(episode);
     await show.save();
     res

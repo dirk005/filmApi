@@ -7,6 +7,10 @@ const episodeSchema = new Schema(
       type: String,
       required: true,
     },
+    showId: {
+      type: String,
+      required: true,
+    },
     show: {
       type: Schema.Types.ObjectId,
       ref: "Show",

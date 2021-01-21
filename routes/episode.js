@@ -11,7 +11,7 @@ const router = express.Router();
 const episodeController = require("../controllers/episode");
 
 //Get movies
-router.get("/episode/:episodeId/:showId", isAuth, episodeController.getEpisode);
+router.get("/episode/", isAuth, episodeController.getEpisode);
 
 //Remove movie
 router.delete("/episode", isAuth, episodeController.removeEpisode);
