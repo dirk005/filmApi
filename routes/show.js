@@ -10,8 +10,10 @@ const router = express.Router();
 //Import Controllers
 const showController = require("../controllers/show");
 
-//Get movies
+//Get show
 router.get("/show/:showId", isAuth, showController.getShow);
+
+router.get("/shows/", isAuth, showController.getShows);
 
 //Remove movie
 router.delete("/show/:showId", isAuth, showController.removeShow);

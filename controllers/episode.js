@@ -19,7 +19,8 @@ exports.getEpisode = async (req, res, next) => {
       user: userId,
     });
     if (!episode) {
-      throwError("Could not find episode", 404);
+      res.status(404).json({message: "episode not found"})
+       throwError("Could not find episode", 404);
     }
     res.status(201).json({
       message: "episode found successfully",

@@ -22,6 +22,21 @@ exports.getShow = async (req, res, next) => {
   }
 };
 
+//Get shows
+exports.getShows = async (req, res, next) => {
+  const userId = req.userId;
+
+  try {
+    const show = await Show.find({ user: userId });
+    if (!show) {
+      throwError("Could not find show", 404);
+    }
+    res.status(201).json({ message: "Shows found successfully", shows: show });
+  } catch (err) {
+    catchError(err, next);
+  }
+};
+
 //add a new show to the list
 exports.addShow = async (req, res, next) => {
   const showId = req.body.showId;
