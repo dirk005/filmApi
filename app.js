@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const helmet= require(helmet);
-require("dotenv").config();
+// require("dotenv").config();
 
 //Import Routes
 const userRoutes = require("./routes/user");
