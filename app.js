@@ -2,6 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const helmet= require(helmet);
 require("dotenv").config();
 
 //Import Routes
@@ -12,6 +13,8 @@ const episodeRoutes = require("./routes/episode");
 
 // Use express on app
 const app = express();
+// use hemet
+app.use(helmet);
 
 // Pharse body data to json
 app.use(bodyParser.json());
@@ -51,6 +54,6 @@ mongoose
     `mongodb+srv://dirk:${process.env.MONGODB_KEY}@cluster0.mlikz.mongodb.net/filmtv?retryWrites=true&w=majority`
   )
   .then((result) => {
-    app.listen(8080);
+    app.listen(process.env.PORT || 8080);
   })
   .catch((err) => console.log(err));
