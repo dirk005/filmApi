@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 });
 
 // use hemet
-app.use(helmet);
+app.use(helmet());
 
 // Pharse body data to json
 app.use(bodyParser.json());
