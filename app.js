@@ -2,7 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const helmet= require(helmet);
+const helmet = require(helmet);
 require("dotenv").config();
 
 //Import Routes
@@ -13,11 +13,6 @@ const episodeRoutes = require("./routes/episode");
 
 // Use express on app
 const app = express();
-// use hemet
-app.use(helmet);
-
-// Pharse body data to json
-app.use(bodyParser.json());
 
 // Allow access to origin
 app.use((req, res, next) => {
@@ -26,9 +21,18 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, PATCH, DELETE, OPTIONS"
   );
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Authorization, Accept");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Authorization, Accept"
+  );
   next();
 });
+
+// use hemet
+app.use(helmet);
+
+// Pharse body data to json
+app.use(bodyParser.json());
 
 //Use routes
 app.use("/user", userRoutes);
